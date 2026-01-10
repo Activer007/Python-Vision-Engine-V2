@@ -86,7 +86,7 @@ export const FlowSandbox: React.FC<Props> = ({ setConsole }) => {
                 <div className="absolute top-24 left-1/2 -translate-x-1/2 w-2 h-24 bg-slate-700"></div>
                 
                 {/* Gate */}
-                <div className={`absolute top-40 left-1/2 w-20 h-2 bg-white transition-transform duration-500 origin-left z-10 ${ifCondition ? 'rotate-45 bg-pve-green' : '-rotate-[135deg] bg-pve-red'} `} style={{ left: 'calc(50% - 2px)'}}></div>
+                <div className={`absolute top-40 left-1/2 w-20 h-2 bg-white transition-transform duration-500 origin-left z-10 ${ifCondition ? 'rotate-[135deg] bg-pve-green' : 'rotate-45 bg-pve-red'} `} style={{ left: 'calc(50% - 2px)'}}></div>
 
                 {/* Left Branch (True) */}
                 <div className="absolute top-48 left-[20%] w-[30%] h-2 bg-slate-700 -rotate-12 border-b-4 border-pve-green/20"></div>
@@ -125,24 +125,29 @@ export const FlowSandbox: React.FC<Props> = ({ setConsole }) => {
                     <span className="text-pve-blue ml-4">process(i)</span>
                 </div>
                 
-                <div className="relative w-full h-32 bg-slate-800 rounded-full border-y-4 border-slate-700 overflow-hidden flex items-center px-4">
-                    {/* Items on Conveyor */}
-                    {loopItems.map((item, idx) => (
-                        <div 
-                            key={idx}
-                            className={`
-                                flex-shrink-0 w-20 h-20 mx-4 rounded-lg flex items-center justify-center font-bold text-xl border-2 transition-all duration-500
-                                ${idx === loopIndex 
-                                    ? 'bg-pve-blue text-white border-white scale-110 shadow-[0_0_20px_rgba(59,130,246,0.5)]' 
-                                    : idx < loopIndex 
-                                        ? 'bg-slate-700 text-slate-500 border-slate-600 opacity-50' 
-                                        : 'bg-slate-600 text-slate-300 border-slate-500'
-                                }
-                            `}
-                        >
-                            {item}
-                        </div>
-                    ))}
+                <div className="relative w-full h-32 bg-slate-800 rounded-full border-y-4 border-slate-700 overflow-hidden flex items-center justify-center px-4">
+                    {/* Items Conveyor Belt */}
+                    <div 
+                        className="flex items-center transition-transform duration-500 ease-in-out"
+                        style={{ transform: `translateX(${(2 - (loopIndex === -1 ? 2 : loopIndex)) * 7}rem)` }}
+                    >
+                        {loopItems.map((item, idx) => (
+                            <div 
+                                key={idx}
+                                className={`
+                                    flex-shrink-0 w-20 h-20 mx-4 rounded-lg flex items-center justify-center font-bold text-xl border-2 transition-all duration-500
+                                    ${idx === loopIndex 
+                                        ? 'bg-pve-blue text-white border-white scale-110 shadow-[0_0_20px_rgba(59,130,246,0.5)]' 
+                                        : idx < loopIndex 
+                                            ? 'bg-slate-700 text-slate-500 border-slate-600 opacity-50' 
+                                            : 'bg-slate-600 text-slate-300 border-slate-500'
+                                    }
+                                `}
+                            >
+                                {item}
+                            </div>
+                        ))}
+                    </div>
                     
                     {/* Processing Head */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-full border-x-2 border-pve-amber bg-pve-amber/5 z-20 flex flex-col justify-between py-2 items-center pointer-events-none">

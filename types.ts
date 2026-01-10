@@ -38,3 +38,12 @@ export interface BracketToken {
 }
 
 export type ChainStep = 0 | 1 | 2 | 3;
+
+export interface FunctionDef {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  businessLogic: string;
+  codePrototype: string;
+}

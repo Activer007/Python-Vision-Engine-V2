@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tag, Library, GitFork, Layers, Terminal, GitCommit, Eye, ToggleLeft } from 'lucide-react';
+import { Tag, Library, GitFork, Layers, Terminal, GitCommit, Eye, ToggleLeft, Scissors } from 'lucide-react';
 import { VariableLabels } from './components/VariableLabels';
 import { ContainerChameleon } from './components/ContainerChameleon';
 import { FlowSandbox } from './components/FlowSandbox';
@@ -7,6 +7,7 @@ import { IndentationSteps } from './components/IndentationSteps';
 import { ChainInterpreter } from './components/ChainInterpreter';
 import { BracketLens } from './components/BracketLens';
 import { LogicToggles } from './components/LogicToggles';
+import { SlicingLab } from './components/SlicingLab';
 import { ConsoleBar } from './components/ConsoleBar';
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
       case 4: return <FlowSandbox setConsole={setConsoleMsg} />;
       case 5: return <IndentationSteps setConsole={setConsoleMsg} />;
       case 6: return <ChainInterpreter setConsole={setConsoleMsg} />;
+      case 7: return <SlicingLab setConsole={setConsoleMsg} />;
       default: return <BracketLens setConsole={setConsoleMsg} />;
     }
   };
@@ -34,6 +36,7 @@ const App: React.FC = () => {
     { id: 4, label: '流程 (Flow)', icon: <GitFork size={18} />, color: 'hover:text-pve-red' },
     { id: 5, label: '函数 (Func)', icon: <Layers size={18} />, color: 'hover:text-pve-blue' },
     { id: 6, label: '链式 (Chain)', icon: <GitCommit size={18} />, color: 'hover:text-pve-purple' },
+    { id: 7, label: '切片 (Slice)', icon: <Scissors size={18} />, color: 'hover:text-pink-500' },
   ];
 
   return (
