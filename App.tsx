@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tag, Library, GitFork, Layers, Terminal, GitCommit, Eye, ToggleLeft, Scissors } from 'lucide-react';
+import { Tag, Library, GitFork, Layers, Terminal, GitCommit, Eye, ToggleLeft, Scissors, Home } from 'lucide-react';
 import { VariableLabels } from './components/VariableLabels';
 import { ContainerChameleon } from './components/ContainerChameleon';
 import { FlowSandbox } from './components/FlowSandbox';
@@ -9,6 +9,8 @@ import { BracketLens } from './components/BracketLens';
 import { LogicToggles } from './components/LogicToggles';
 import { SlicingLab } from './components/SlicingLab';
 import { ConsoleBar } from './components/ConsoleBar';
+
+const PORTAL_URL = "https://ai-trainer-porama-system.vercel.app/";
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -40,7 +42,7 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans selection:bg-pve-blue selection:text-white overflow-hidden">
+    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans selection:bg-pve-blue selection:text-white overflow-hidden relative">
       {/* Top Navigation Bar */}
       <header className="bg-slate-950 border-b border-slate-800 shrink-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -100,6 +102,18 @@ const App: React.FC = () => {
           <ConsoleBar message={consoleMsg} />
         </div>
       </main>
+
+      {/* Portal Button */}
+      <a
+        href={PORTAL_URL}
+        className="fixed bottom-6 right-6 z-50 p-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full shadow-[0_0_20px_rgba(99,102,241,0.4)] backdrop-blur-md transition-all duration-300 hover:scale-110 hover:-translate-y-1 group flex items-center gap-0 hover:gap-2 overflow-hidden border border-white/20"
+        title="返回备考系统门户"
+      >
+        <Home className="w-6 h-6" />
+        <span className="max-w-0 group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap opacity-0 group-hover:opacity-100 text-sm font-bold">
+          返回门户
+        </span>
+      </a>
     </div>
   );
 };
