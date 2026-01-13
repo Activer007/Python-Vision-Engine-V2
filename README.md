@@ -1,100 +1,245 @@
 <div align="center">
   <img width="1200" height="auto" alt="Python Vision Engine Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-  
+
   <br />
   <br />
 
   # Python Vision Engine (PVE) v1.2
-  ### 物理逻辑实验室 (Physical Logic Laboratory)
+  ### 物理逻辑实验室
 
   <p align="center">
-    <b>An interactive visualization tool to "see" Python execution logic.</b>
+    <b>一个"看得见"Python 代码执行逻辑的交互式可视化工具</b>
+  </p>
+
+  <p align="center">
+    <a href="#项目简介">简介</a> •
+    <a href="#核心功能">功能</a> •
+    <a href="#技术栈">技术栈</a> •
+    <a href="#快速开始">快速开始</a> •
+    <a href="#项目结构">项目结构</a>
   </p>
 </div>
 
 ---
 
-## 📖 Introduction
+## 📖 项目简介
 
-**Python Vision Engine (PVE)** is a React-based educational tool designed to demystify Python concepts through interactive, visual metaphors. By treating code execution as "physical" interactions, it helps learners build a mental model of how the Python interpreter works.
+**Python Vision Engine (PVE)** 是一款基于 React 的交互式教育工具，旨在通过可视化的物理隐喻帮助学习者理解 Python 编程中的抽象概念。本项目的核心理念是将代码执行过程转化为"物理"交互，帮助学习者建立关于 Python 解释器如何工作的心智模型。
 
-Built with **React 19**, **Vite**, and **Tailwind CSS**, PVE provides a suite of specialized laboratories to explore different aspects of the language.
+### 核心理念
 
-## 🚀 Features / Modules
+- **可视化抽象概念**：将看不见的代码逻辑转化为直观的视觉元素
+- **交互式学习**：通过鼠标悬停、点击等操作实时观察代码行为
+- **物理化隐喻**：用日常生活中的物理现象类比编程概念（如"数据流动"、"容器变形"等）
+- **渐进式教学**：从基础语法到高级特性，循序渐进地构建知识体系
 
-The application is divided into 8 core "laboratories," each focusing on a specific Python concept:
+### 技术亮点
 
-| Module | Icon | Description |
-| :--- | :---: | :--- |
-| **透视镜 (Syntax)** | 👁️ | Visualize code structure, nesting, and scope boundaries. (`BracketLens`) |
-| **变量 (Vars)** | 🏷️ | Track variable assignments, references, and type changes. (`VariableLabels`) |
-| **容器 (Data)** | 📚 | Interactive exploration of lists, dictionaries, sets, and tuples. (`ContainerChameleon`) |
-| **逻辑 (Logic)** | 🎚️ | Boolean logic gates and modification states visualization. (`LogicToggles`) |
-| **流程 (Flow)** | 🔱 | Visualize control flow, branches, and loops. (`FlowSandbox`) |
-| **函数 (Func)** | 🥞 | Understand indentation, blocks, and call stacks. (`IndentationSteps`) |
-| **链式 (Chain)** | 🔗 | Visualize method chaining and object transformations. (`ChainInterpreter`) |
-| **切片 (Slice)** | ✂️ | Interactive array and string slicing explorer. (`SlicingLab`) |
+- ⚡️ **React 19** + **TypeScript** - 类型安全的现代化开发体验
+- 🎨 **Tailwind CSS** - 优雅的深色主题 UI 设计
+- 🔧 **Vite** - 极速的开发构建体验
+- 📦 **零依赖打包** - 通过 Import Maps 使用 CDN 模块，无需复杂的构建流程
 
-## 🛠️ Technology Stack
+---
 
-- **Core:** React 19, TypeScript
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS, Lucide React (Icons)
-- **Deployment:** Vercel (Ready)
+## 🚀 核心功能
 
-## 💻 Getting Started
+应用包含 8 个核心"实验室"模块，每个模块专注于 Python 的一个特定概念领域：
 
-### Prerequisites
+| 模块 | 图标 | 描述 | 组件名称 |
+| :--- | :---: | :--- | :--- |
+| **透视镜** | 👁️ | 可视化代码结构、嵌套层级和作用域边界。通过鼠标悬停实时解析括号配对和语法结构 | `BracketLens` |
+| **变量** | 🏷️ | 追踪变量赋值、引用关系和类型变化。展示变量名如何"贴"到数据对象上 | `VariableLabels` |
+| **容器** | 📚 | 交互式探索列表、字典、集合和元组等数据容器。支持不同容器类型之间的动态转换 | `ContainerChameleon` |
+| **逻辑** | 🎚️ | 布尔逻辑门和条件判断可视化。演示 True/False 如何控制程序分支 | `LogicToggles` |
+| **流程** | 🔱 | 可视化控制流、分支和循环。通过物理隐喻展示 for/while 的执行过程 | `FlowSandbox` |
+| **函数** | 🥞 | 理解缩进规则、代码块和调用栈。展示 Python 如何通过缩进组织代码结构 | `IndentationSteps` |
+| **链式** | 🔗 | 可视化方法链式调用和对象转换。演示 Pandas 风格的 `.groupby().mean()` 链式操作 | `ChainInterpreter` |
+| **切片** | ✂️ | 交互式数组和字符串切片探索器。直观展示索引、切片、iloc/loc 的行为 | `SlicingLab` |
 
-- Node.js (v18 or higher recommended)
-- npm or yarn
+### 通用设计元素
 
-### Installation
+所有模块共享以下设计特性：
 
-1. Clone the repository:
+- **🔍 翻译官控制台**：每个模块都有专属的教学提示系统，实时解释当前操作的含义
+- **🎯 交互反馈**：所有的用户操作都会得到即时的视觉反馈和文字说明
+- **🌓 深色主题**：护眼的深色界面，专注学习体验
+- **📱 响应式设计**：支持桌面和移动设备访问
+
+---
+
+## 🛠️ 技术栈
+
+### 核心框架
+- **React 19.2.3** - 最新的 React 版本，支持并发渲染和自动批处理
+- **TypeScript 5.8** - 提供完整的类型安全和智能提示
+- **Vite 6.2** - 新一代前端构建工具，极速 HMR
+
+### UI 和样式
+- **Tailwind CSS** - 通过 CDN 引入的实用优先 CSS 框架
+- **Lucide React** - 精美的图标库
+- **自定义颜色系统** - `pve-blue`, `pve-purple`, `pve-green` 等主题色
+
+### 架构特性
+- **组件化设计** - 8 个独立的教学模块，低耦合高内聚
+- **集中式状态管理** - 简单的 React State，无需复杂的 Redux
+- **Import Maps** - 使用 esm.sh CDN 模块，减小打包体积
+- **路径别名** - `@/*` 别名指向项目根目录，简化导入路径
+
+---
+
+## 💻 快速开始
+
+### 前置要求
+
+- **Node.js** v18 或更高版本
+- **npm** 或 **yarn** 包管理器
+
+### 安装步骤
+
+1. **克隆仓库**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Activer007/Python-Vision-Engine-V2.git
    cd Python-Vision-Engine-V2
    ```
 
-2. Install dependencies:
+2. **安装依赖**
    ```bash
    npm install
    ```
 
-3. Run the development server:
+3. **配置环境变量**（可选）
+
+   创建 `.env.local` 文件并设置：
+   ```bash
+   GEMINI_API_KEY=your_api_key_here
+   ```
+
+   > 注：当前版本主要使用本地交互组件，API Key 为未来功能预留
+
+4. **启动开发服务器**
    ```bash
    npm run dev
    ```
 
-4. Open your browser at `http://localhost:5173` (or the port shown in your terminal).
+5. **访问应用**
 
-## 🧩 Project Structure
+   打开浏览器访问 `http://localhost:3000`（或终端显示的其他端口）
+
+### 构建生产版本
+
+```bash
+# 构建生产版本
+npm run build
+
+# 预览生产构建
+npm run preview
+```
+
+---
+
+## 🧩 项目结构
 
 ```
 Python-Vision-Engine-V2/
-├── components/          # Individual visualization modules (labs)
-│   ├── BracketLens.tsx
-│   ├── VariableLabels.tsx
-│   ├── ...
-│   └── ConsoleBar.tsx
-├── App.tsx             # Main application layout and routing
-├── main.tsx            # Entry point
-├── index.html          # HTML template
-├── tailwind.config.js  # Styling configuration
-└── package.json        # Dependencies and scripts
+├── components/              # 独立的可视化模块（实验室）
+│   ├── BracketLens.tsx     # 透视镜 - 语法结构可视化
+│   ├── VariableLabels.tsx  # 变量 - 赋值和类型追踪
+│   ├── ContainerChameleon.tsx  # 容器 - 数据结构转换
+│   ├── LogicToggles.tsx    # 逻辑 - 布尔运算可视化
+│   ├── FlowSandbox.tsx     # 流程 - 循环和分支控制
+│   ├── IndentationSteps.tsx    # 函数 - 缩进和作用域
+│   ├── ChainInterpreter.tsx    # 链式 - 方法链可视化
+│   ├── SlicingLab.tsx      # 切片 - 索引和切片操作
+│   └── ConsoleBar.tsx      # 全局控制台组件
+├── App.tsx                 # 主应用布局和路由
+├── index.tsx               # React 入口文件
+├── index.html              # HTML 模板和 Tailwind 配置
+├── types.ts                # TypeScript 类型定义
+├── constants.ts            # 教学数据和常量
+├── vite.config.ts          # Vite 配置
+├── tsconfig.json           # TypeScript 配置
+└── package.json            # 依赖和脚本
 ```
 
-## 🤝 Contributing
+### 关键文件说明
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- **`types.ts`** - 集中定义所有 TypeScript 接口和类型
+- **`constants.ts`** - 包含 5 个 Tier 的 Python/Pandas/NumPy 函数库定义
+- **`App.tsx`** - 管理全局状态（当前标签页、控制台消息）和导航逻辑
+- **`vite.config.ts`** - 配置路径别名、环境变量注入和开发服务器设置
 
-## 📄 License
+---
 
-This project is private/proprietary.
+## 🎨 自定义配置
+
+### 颜色主题
+
+在 `index.html` 中可以自定义主题色：
+
+```javascript
+colors: {
+  pve: {
+    blue: '#3b82f6',      // 逻辑相关
+    purple: '#a855f7',    // 方法相关
+    green: '#22c55e',     // 成功/数据
+    red: '#ef4444',       // 错误/删除
+    amber: '#f59e0b',     // 警告/未知
+  }
+}
+```
+
+### 路径别名
+
+项目已配置 `@/*` 别名指向根目录：
+
+```typescript
+// 可以这样导入
+import { Button } from '@/components/Button';
+```
+
+---
+
+## 🔮 未来计划
+
+- [ ] 添加更多教学模块（装饰器、生成器、异步编程等）
+- [ ] 集成 AI 辅助教学功能
+- [ ] 支持用户自定义代码示例
+- [ ] 添加练习题和测验功能
+- [ ] 支持多语言界面（完全国际化）
+
+---
+
+## 🤝 贡献指南
+
+欢迎贡献代码、报告问题或提出新功能建议！
+
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+---
+
+## 📄 许可证
+
+本项目为私有/专有项目。
+
+---
+
+## 🔗 相关链接
+
+- **AI Studio 应用**: https://ai.studio/apps/drive/1G9jQ7HailIyghW03iwAnIXNDXqYgRnlC
+- **备考系统门户**: https://ai-trainer-porama-system.vercel.app/
+- **GitHub 仓库**: https://github.com/Activer007/Python-Vision-Engine-V2
 
 ---
 
 <div align="center">
-  <small>Powered by React & Vite</small>
+  <small>
+    使用 ❤️ 和 React & Vite 构建
+    <br>
+    © 2024 Python Vision Engine. All rights reserved.
+  </small>
 </div>
