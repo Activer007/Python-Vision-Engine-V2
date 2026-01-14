@@ -8,7 +8,9 @@
       "Bash(npx husky init:*)",
       "Bash(npm run lint)",
       "Bash(npx tailwindcss init -p)",
-      "Bash(npm run test:*)"
+      "Bash(npm run test:*)",
+      "WebSearch",
+      "Bash(grep:*)"
     ]
   }
 }
