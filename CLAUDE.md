@@ -31,10 +31,11 @@ npm run preview
 
 ### 核心设计模式
 
-1. **Tab-based 导航架构**
-   - `App.tsx` 是主入口,管理 `activeTab` 状态 (0-7)
-   - 每个标签页对应一个独立的教学模块组件
-   - 所有组件共享一个全局控制台 (`ConsoleBar`)
+1. **响应式导航架构 (Responsive Navigation)**
+   - **Desktop**: 左侧侧边栏 (`Sidebar`) 布局，提供更好的扩展性
+   - **Mobile**: 顶部导航 + 水平滚动菜单，保持移动端体验
+   - `App.tsx` 作为主入口，继续管理 `activeTab` 状态 (0-7)
+   - 核心内容区域采用 Flex 布局自适应剩余空间
 
 2. **全局控制台模式**
    - `App.tsx` 维护 `consoleMsg` 状态
