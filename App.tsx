@@ -150,70 +150,86 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col font-sans selection:bg-pve-blue selection:text-white overflow-hidden relative">
-        {/* Top Navigation Bar */}
-        <header className="bg-slate-950 border-b border-slate-800 shrink-0 z-50">
+      <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col md:flex-row font-sans selection:bg-pve-blue selection:text-white overflow-hidden relative">
+        {/* Sidebar Navigation (Desktop) */}
+        <aside className="hidden md:flex w-64 flex-col bg-slate-950 border-r border-slate-800 shrink-0 z-50">
+          <div className="p-4 border-b border-slate-800 flex items-center gap-3">
+            <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-2 rounded-lg shadow-lg shadow-blue-500/20">
+              <Terminal size={24} className="text-white" />
+            </div>
+            <div>
+              <h1 className="font-bold text-base tracking-tight leading-tight">Python Vision</h1>
+              <p className="text-[10px] text-slate-400 uppercase tracking-widest">Engine v1.0</p>
+            </div>
+          </div>
+
+          <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-1 custom-scrollbar">
+            <div className="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              Laboratories
+            </div>
+            {navItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`
+                  w-full flex items-center gap-3 px-3 py-3 rounded-md transition-all duration-200 text-sm font-medium text-left
+                  ${
+                    activeTab === item.id
+                      ? 'bg-slate-800 text-white shadow-inner border border-slate-700/50'
+                      : `text-slate-400 hover:bg-slate-900 ${item.color}`
+                  }
+                `}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            ))}
+          </nav>
+
+          <div className="p-4 border-t border-slate-800">
+            <div className="text-xs text-slate-500 text-center">© 2024 Python Vision Engine</div>
+          </div>
+        </aside>
+
+        {/* Mobile Header (visible only on mobile) */}
+        <header className="md:hidden bg-slate-950 border-b border-slate-800 shrink-0 z-50">
           <div className="container mx-auto px-4 h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-2 rounded-lg shadow-lg shadow-blue-500/20">
                 <Terminal size={24} className="text-white" />
               </div>
               <div>
-                <h1 className="font-bold text-lg tracking-tight">
-                  Python Vision Engine{' '}
-                  <span className="text-xs text-slate-500 font-normal">v1.0</span>
-                </h1>
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest">
-                  物理逻辑实验室
-                </p>
+                <h1 className="font-bold text-lg tracking-tight">Python Vision Engine</h1>
               </div>
             </div>
+          </div>
 
-            <nav className="hidden md:flex gap-1 overflow-x-auto">
-              {navItems.map(item => (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`
-                  flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 text-sm font-medium whitespace-nowrap
-                  ${
-                    activeTab === item.id
-                      ? 'bg-slate-800 text-white shadow-inner border border-slate-700'
-                      : `text-slate-400 hover:bg-slate-900 ${item.color}`
-                  }
-                `}
-                >
-                  {item.icon}
-                  {item.label}
-                </button>
-              ))}
-            </nav>
+          {/* Mobile Nav Scroller */}
+          <div className="flex overflow-x-auto gap-2 p-2 bg-slate-950 border-t border-slate-800 no-scrollbar">
+            {navItems.map(item => (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={`flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded text-xs font-bold border ${activeTab === item.id ? 'bg-slate-800 border-slate-600 text-white' : 'border-transparent text-slate-500'}`}
+              >
+                {item.icon}
+                {item.label}
+              </button>
+            ))}
           </div>
         </header>
 
-        {/* Mobile Nav */}
-        <div className="md:hidden flex overflow-x-auto gap-2 p-2 bg-slate-950 border-b border-slate-800 no-scrollbar shrink-0">
-          {navItems.map(item => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded text-xs font-bold border ${activeTab === item.id ? 'bg-slate-800 border-slate-600 text-white' : 'border-transparent text-slate-500'}`}
-            >
-              {item.icon}
-              {item.label}
-            </button>
-          ))}
-        </div>
-
         {/* Main Content Area */}
-        <main className="flex-1 container mx-auto p-4 md:p-6 max-w-6xl overflow-hidden flex flex-col">
-          <div className="flex-1 bg-slate-900/50 rounded-t-2xl border-x border-t border-slate-800/50 backdrop-blur-sm shadow-2xl overflow-hidden relative">
-            {renderContent()}
-          </div>
+        <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+          <div className="flex-1 overflow-hidden flex flex-col p-4 md:p-6 relative">
+            <div className="flex-1 bg-slate-900/50 rounded-t-2xl border-x border-t border-slate-800/50 backdrop-blur-sm shadow-2xl overflow-hidden relative">
+              {renderContent()}
+            </div>
 
-          {/* Global Console Bar */}
-          <div className="rounded-b-2xl overflow-hidden border-x border-b border-slate-800/50">
-            <ConsoleBar message={consoleMsg} />
+            {/* Global Console Bar */}
+            <div className="rounded-b-2xl overflow-hidden border-x border-b border-slate-800/50 shrink-0">
+              <ConsoleBar message={consoleMsg} />
+            </div>
           </div>
         </main>
 
