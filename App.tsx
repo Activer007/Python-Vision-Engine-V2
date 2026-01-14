@@ -15,37 +15,75 @@ import {
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { ConsoleBar } from './components/ConsoleBar';
 
+// Error fallback component for lazy loading failures
+const LazyLoadErrorFallback: React.FC<{ componentName: string }> = ({ componentName }) => (
+  <div className="flex items-center justify-center min-h-[500px]">
+    <div className="text-center">
+      <Terminal className="mx-auto text-pve-red mb-4" size={48} />
+      <h3 className="text-xl font-bold text-white mb-2">组件加载失败</h3>
+      <p className="text-slate-400 text-sm mb-2">无法加载 {componentName} 组件</p>
+      <p className="text-slate-500 text-xs">请检查网络连接或刷新页面重试</p>
+    </div>
+  </div>
+);
+
 // Lazy load all lab components for code splitting
 const BracketLens = lazy(() =>
-  import('./components/BracketLens').then(m => ({ default: m.BracketLens }))
+  import('./components/BracketLens')
+    .then(m => ({ default: m.BracketLens }))
+    .catch(() => ({
+      default: () => <LazyLoadErrorFallback componentName="透视镜 (BracketLens)" />,
+    }))
 );
 const VariableLabels = lazy(() =>
-  import('./components/VariableLabels').then(m => ({ default: m.VariableLabels }))
+  import('./components/VariableLabels')
+    .then(m => ({ default: m.VariableLabels }))
+    .catch(() => ({
+      default: () => <LazyLoadErrorFallback componentName="变量 (VariableLabels)" />,
+    }))
 );
 const ContainerChameleon = lazy(() =>
-  import('./components/ContainerChameleon').then(m => ({ default: m.ContainerChameleon }))
+  import('./components/ContainerChameleon')
+    .then(m => ({ default: m.ContainerChameleon }))
+    .catch(() => ({
+      default: () => <LazyLoadErrorFallback componentName="容器 (ContainerChameleon)" />,
+    }))
 );
 const LogicToggles = lazy(() =>
-  import('./components/LogicToggles').then(m => ({ default: m.LogicToggles }))
+  import('./components/LogicToggles')
+    .then(m => ({ default: m.LogicToggles }))
+    .catch(() => ({ default: () => <LazyLoadErrorFallback componentName="逻辑 (LogicToggles)" /> }))
 );
 const FlowSandbox = lazy(() =>
-  import('./components/FlowSandbox').then(m => ({ default: m.FlowSandbox }))
+  import('./components/FlowSandbox')
+    .then(m => ({ default: m.FlowSandbox }))
+    .catch(() => ({ default: () => <LazyLoadErrorFallback componentName="流程 (FlowSandbox)" /> }))
 );
 const IndentationSteps = lazy(() =>
-  import('./components/IndentationSteps').then(m => ({ default: m.IndentationSteps }))
+  import('./components/IndentationSteps')
+    .then(m => ({ default: m.IndentationSteps }))
+    .catch(() => ({
+      default: () => <LazyLoadErrorFallback componentName="函数 (IndentationSteps)" />,
+    }))
 );
 const ChainInterpreter = lazy(() =>
-  import('./components/ChainInterpreter').then(m => ({ default: m.ChainInterpreter }))
+  import('./components/ChainInterpreter')
+    .then(m => ({ default: m.ChainInterpreter }))
+    .catch(() => ({
+      default: () => <LazyLoadErrorFallback componentName="链式 (ChainInterpreter)" />,
+    }))
 );
 const SlicingLab = lazy(() =>
-  import('./components/SlicingLab').then(m => ({ default: m.SlicingLab }))
+  import('./components/SlicingLab')
+    .then(m => ({ default: m.SlicingLab }))
+    .catch(() => ({ default: () => <LazyLoadErrorFallback componentName="切片 (SlicingLab)" /> }))
 );
 
 const PORTAL_URL = 'https://ai-trainer-porama-system.vercel.app/';
 
 // Loading skeleton component
 const LabSkeleton: React.FC = () => (
-  <div className="flex items-center justify-center h-full p-8">
+  <div className="flex items-center justify-center min-h-[500px] p-8">
     <div className="text-center">
       <Loader2 className="mx-auto text-pve-blue animate-spin mb-4" size={48} />
       <h3 className="text-xl font-bold text-white mb-2">加载实验室中...</h3>
@@ -85,7 +123,7 @@ const App: React.FC = () => {
     return (
       <ErrorBoundary
         fallback={
-          <div className="flex items-center justify-center h-full">
+          <div className="flex items-center justify-center min-h-[500px]">
             <div className="text-center">
               <Terminal className="mx-auto text-pve-red mb-4" size={48} />
               <h3 className="text-xl font-bold text-white mb-2">实验室加载失败</h3>

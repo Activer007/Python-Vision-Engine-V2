@@ -4,11 +4,15 @@ import { AlertCircle, RefreshCw } from 'lucide-react';
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
+  onReset?: () => void;
+  maxRetries?: number;
 }
 
 interface State {
   hasError: boolean;
   error: Error | null;
+  retryCount: number;
+  maxRetriesReached: boolean;
 }
 
 export class ErrorBoundary extends Component<Props, State> {
@@ -17,10 +21,12 @@ export class ErrorBoundary extends Component<Props, State> {
     this.state = {
       hasError: false,
       error: null,
+      retryCount: 0,
+      maxRetriesReached: false,
     };
   }
 
-  static getDerivedStateFromError(error: Error): State {
+  static getDerivedStateFromError(error: Error): Partial<State> {
     return {
       hasError: true,
       error,
@@ -31,15 +37,45 @@ export class ErrorBoundary extends Component<Props, State> {
     // Log error to console in development
     console.error('ErrorBoundary caught an error:', error, errorInfo);
 
+    // Preserve retryCount and maxRetriesReached when error occurs again
+    this.setState(prevState => ({
+      retryCount: prevState.retryCount,
+      maxRetriesReached: prevState.maxRetriesReached,
+    }));
+
     // TODO: Send error to error tracking service (e.g., Sentry)
-    // logErrorToService(error, errorInfo);
+    if (import.meta.env.PROD) {
+      // In production, send to error tracking service
+      // logErrorToService(error, errorInfo);
+    }
   }
 
   handleReset = () => {
-    this.setState({
-      hasError: false,
-      error: null,
-    });
+    const { onReset, maxRetries = 3 } = this.props;
+    const { retryCount, maxRetriesReached } = this.state;
+
+    // Check if max retries exceeded
+    if (maxRetriesReached || retryCount >= maxRetries) {
+      console.warn(`Max retries (${maxRetries}) exceeded. Please refresh the page.`);
+      // Mark as max retries reached
+      this.setState({ maxRetriesReached: true });
+      return;
+    }
+
+    // Increment retry count and reset error state
+    this.setState(
+      prevState => ({
+        hasError: false,
+        error: null,
+        retryCount: prevState.retryCount + 1,
+      }),
+      () => {
+        // Call onReset callback if provided
+        if (onReset) {
+          onReset();
+        }
+      }
+    );
   };
 
   render() {
@@ -64,7 +100,7 @@ export class ErrorBoundary extends Component<Props, State> {
                   应用程序遇到了意外错误。我们已记录此问题。
                 </p>
 
-                {this.state.error && (
+                {this.state.error && import.meta.env.DEV && (
                   <details className="mb-4">
                     <summary className="text-xs text-slate-500 cursor-pointer hover:text-slate-300 mb-2">
                       查看技术详情 (Technical Details)
@@ -74,6 +110,22 @@ export class ErrorBoundary extends Component<Props, State> {
                       {this.state.error.stack}
                     </pre>
                   </details>
+                )}
+
+                {this.state.error && import.meta.env.PROD && (
+                  <p className="text-xs text-slate-500 mb-4">错误代码: {this.state.error.name}</p>
+                )}
+
+                {this.state.retryCount > 0 && !this.state.maxRetriesReached && (
+                  <p className="text-xs text-pve-amber mb-4">
+                    重试次数: {this.state.retryCount}/{this.props.maxRetries || 3}
+                  </p>
+                )}
+
+                {this.state.maxRetriesReached && (
+                  <p className="text-xs text-pve-red mb-4 font-bold">
+                    已达到最大重试次数，请刷新页面
+                  </p>
                 )}
 
                 <button
