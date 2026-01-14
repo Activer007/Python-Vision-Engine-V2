@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npx prettier:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx husky init:*)",
+      "Bash(npm run lint)"
+    ]
+  }
+}
