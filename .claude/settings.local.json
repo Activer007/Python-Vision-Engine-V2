@@ -6,7 +6,8 @@
       "Bash(npx prettier:*)",
       "Bash(npx tsc:*)",
       "Bash(npx husky init:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(npx tailwindcss init -p)"
     ]
   }
 }
