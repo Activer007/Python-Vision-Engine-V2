@@ -13,6 +13,7 @@ export default [
       'dist/**',
       'build/**',
       'node_modules/**',
+      'coverage/**',
       '*.config.js',
       'vite.config.ts',
     ],
