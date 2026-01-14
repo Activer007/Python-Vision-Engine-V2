@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import {
   Tag,
   Library,
@@ -10,19 +10,49 @@ import {
   ToggleLeft,
   Scissors,
   Home,
+  Loader2,
 } from 'lucide-react';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { VariableLabels } from './components/VariableLabels';
-import { ContainerChameleon } from './components/ContainerChameleon';
-import { FlowSandbox } from './components/FlowSandbox';
-import { IndentationSteps } from './components/IndentationSteps';
-import { ChainInterpreter } from './components/ChainInterpreter';
-import { BracketLens } from './components/BracketLens';
-import { LogicToggles } from './components/LogicToggles';
-import { SlicingLab } from './components/SlicingLab';
 import { ConsoleBar } from './components/ConsoleBar';
 
+// Lazy load all lab components for code splitting
+const BracketLens = lazy(() =>
+  import('./components/BracketLens').then(m => ({ default: m.BracketLens }))
+);
+const VariableLabels = lazy(() =>
+  import('./components/VariableLabels').then(m => ({ default: m.VariableLabels }))
+);
+const ContainerChameleon = lazy(() =>
+  import('./components/ContainerChameleon').then(m => ({ default: m.ContainerChameleon }))
+);
+const LogicToggles = lazy(() =>
+  import('./components/LogicToggles').then(m => ({ default: m.LogicToggles }))
+);
+const FlowSandbox = lazy(() =>
+  import('./components/FlowSandbox').then(m => ({ default: m.FlowSandbox }))
+);
+const IndentationSteps = lazy(() =>
+  import('./components/IndentationSteps').then(m => ({ default: m.IndentationSteps }))
+);
+const ChainInterpreter = lazy(() =>
+  import('./components/ChainInterpreter').then(m => ({ default: m.ChainInterpreter }))
+);
+const SlicingLab = lazy(() =>
+  import('./components/SlicingLab').then(m => ({ default: m.SlicingLab }))
+);
+
 const PORTAL_URL = 'https://ai-trainer-porama-system.vercel.app/';
+
+// Loading skeleton component
+const LabSkeleton: React.FC = () => (
+  <div className="flex items-center justify-center h-full p-8">
+    <div className="text-center">
+      <Loader2 className="mx-auto text-pve-blue animate-spin mb-4" size={48} />
+      <h3 className="text-xl font-bold text-white mb-2">加载实验室中...</h3>
+      <p className="text-slate-400 text-sm">正在准备可视化组件</p>
+    </div>
+  </div>
+);
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -64,7 +94,7 @@ const App: React.FC = () => {
           </div>
         }
       >
-        {content()}
+        <Suspense fallback={<LabSkeleton />}>{content()}</Suspense>
       </ErrorBoundary>
     );
   };
