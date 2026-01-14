@@ -12,6 +12,7 @@ interface ClassDef {
   methods: string[];
   parent: string | null;
   color: string;
+  borderColor: string;
 }
 
 interface ObjectInstance {
@@ -35,6 +36,7 @@ export const OOPLab: React.FC<Props> = ({ setConsole }) => {
       methods: ['eat()', 'sleep()'],
       parent: null,
       color: 'bg-blue-600',
+      borderColor: 'border-blue-600',
     },
     {
       id: 'dog',
@@ -43,6 +45,7 @@ export const OOPLab: React.FC<Props> = ({ setConsole }) => {
       methods: ['bark()'],
       parent: 'animal',
       color: 'bg-green-600',
+      borderColor: 'border-green-600',
     },
     {
       id: 'cat',
@@ -51,6 +54,7 @@ export const OOPLab: React.FC<Props> = ({ setConsole }) => {
       methods: ['meow()'],
       parent: 'animal',
       color: 'bg-purple-600',
+      borderColor: 'border-purple-600',
     },
   ];
 
@@ -321,7 +325,7 @@ export const OOPLab: React.FC<Props> = ({ setConsole }) => {
                 return (
                   <div
                     key={instance.id}
-                    className={`${classDef.color}/20 border-2 border-${classDef.color.replace('bg-', '')} p-4 rounded-lg`}
+                    className={`${classDef.color}/20 border-2 ${classDef.borderColor} p-4 rounded-lg`}
                   >
                     <div className="flex justify-between items-start mb-3">
                       <div>
