@@ -83,6 +83,11 @@ const AsyncLab = lazy(() =>
     .then(m => ({ default: m.AsyncLab }))
     .catch(() => ({ default: () => <LazyLoadErrorFallback componentName="异步 (AsyncLab)" /> }))
 );
+const OOPLab = lazy(() =>
+  import('./components/OOPLab')
+    .then(m => ({ default: m.OOPLab }))
+    .catch(() => ({ default: () => <LazyLoadErrorFallback componentName="面向对象 (OOPLab)" /> }))
+);
 
 const PORTAL_URL = 'https://ai-trainer-porama-system.vercel.app/';
 
@@ -122,6 +127,8 @@ const App: React.FC = () => {
           return <SlicingLab setConsole={setConsoleMsg} />;
         case 8:
           return <AsyncLab setConsole={setConsoleMsg} />;
+        case 9:
+          return <OOPLab setConsole={setConsoleMsg} />;
         default:
           return <BracketLens setConsole={setConsoleMsg} />;
       }
@@ -154,6 +161,7 @@ const App: React.FC = () => {
     { id: 6, label: '链式 (Chain)', icon: <GitCommit size={18} />, color: 'hover:text-pve-purple' },
     { id: 7, label: '切片 (Slice)', icon: <Scissors size={18} />, color: 'hover:text-pink-500' },
     { id: 8, label: '异步 (Async)', icon: <Terminal size={18} />, color: 'hover:text-pve-purple' },
+    { id: 9, label: '对象 (OOP)', icon: <Layers size={18} />, color: 'hover:text-pve-green' },
   ];
 
   return (
