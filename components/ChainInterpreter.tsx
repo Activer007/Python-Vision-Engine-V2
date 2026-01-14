@@ -241,10 +241,10 @@ export const ChainInterpreter: React.FC<Props> = ({ setConsole }) => {
       </div>
 
       {/* Visualization Stage */}
-      <div className="flex-1 bg-slate-900 rounded-xl border border-slate-700 relative overflow-hidden flex items-center justify-center p-8 perspective-[1000px]">
+      <div className="flex-1 bg-slate-900 rounded-xl border border-slate-700 relative overflow-y-auto flex p-8 perspective-[1000px]">
         {!showTable ? (
           // Single Number View (Cleaning Step 3)
-          <div className="animate-scale-in flex flex-col items-center gap-4">
+          <div className="m-auto animate-scale-in flex flex-col items-center gap-4">
             <div className="w-48 h-48 rounded-full bg-slate-800 border-4 border-pve-blue flex items-center justify-center shadow-[0_0_50px_rgba(59,130,246,0.3)]">
               <div className="flex flex-col items-center">
                 <Calculator className="text-pve-blue mb-2" size={32} />
@@ -255,11 +255,11 @@ export const ChainInterpreter: React.FC<Props> = ({ setConsole }) => {
           </div>
         ) : (
           // Table View
-          <div className="w-full max-w-3xl transition-all duration-500 transform">
+          <div className="m-auto w-full max-w-3xl transition-all duration-500 transform">
             <div className="bg-slate-800 rounded-lg overflow-hidden border border-slate-600 shadow-2xl relative">
               {/* Table Header */}
               <div
-                className={`grid ${scenario === 'ANALYTICS' && step >= 2 ? 'grid-cols-4' : 'grid-cols-3'} bg-slate-950 p-4 border-b border-slate-600 font-mono text-sm text-slate-400 transition-all duration-300`}
+                className={`grid ${scenario === 'ANALYTICS' && step >= 2 ? 'grid-cols-4' : 'grid-cols-3'} bg-slate-950 p-3 border-b border-slate-600 font-mono text-sm text-slate-400 transition-all duration-300`}
               >
                 <div>ID</div>
                 <div>Name</div>
@@ -289,13 +289,13 @@ export const ChainInterpreter: React.FC<Props> = ({ setConsole }) => {
                   <div
                     key={row.id}
                     className={`
-                      grid ${scenario === 'ANALYTICS' && step >= 2 ? 'grid-cols-4' : 'grid-cols-3'} p-4 border-b border-slate-700 transition-all duration-700 ease-in-out
+                      grid ${scenario === 'ANALYTICS' && step >= 2 ? 'grid-cols-4' : 'grid-cols-3'} p-3 border-b border-slate-700 transition-all duration-700 ease-in-out
                       ${
                         isFiltered
                           ? 'opacity-0 h-0 p-0 border-0 overflow-hidden scale-95 origin-center'
-                          : 'opacity-100 h-16 scale-100 hover:bg-slate-700/50'
+                          : 'opacity-100 h-10 scale-100 hover:bg-slate-700/50'
                       }
-                      ${scenario === 'ANALYTICS' && step === 3 && idx === 0 ? 'bg-pink-500/10' : ''} 
+                      ${scenario === 'ANALYTICS' && step === 3 && idx === 0 ? 'bg-pink-500/10' : ''}
                     `}
                   >
                     <div className="font-mono text-slate-500 flex items-center">{row.id}</div>
