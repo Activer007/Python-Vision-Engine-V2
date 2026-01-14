@@ -123,7 +123,7 @@ const App: React.FC = () => {
               <div>
                 <h1 className="font-bold text-lg tracking-tight">
                   Python Vision Engine{' '}
-                  <span className="text-xs text-slate-500 font-normal">v1.2</span>
+                  <span className="text-xs text-slate-500 font-normal">v1.0</span>
                 </h1>
                 <p className="text-[10px] text-slate-400 uppercase tracking-widest">
                   物理逻辑实验室
